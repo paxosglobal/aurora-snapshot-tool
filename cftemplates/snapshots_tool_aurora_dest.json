@@ -106,7 +106,7 @@
 				"Bucket": "snapshots-tool-aurora-eu-west-1"
 			},
 			"eu-west-2": {
-				"Bucket": "snapshots-tool-aurora-eu-west-2-real"
+				"Bucket": "snapshots-tool-aurora-eu-west-2"
 			},
 			"eu-central-1": {
 				"Bucket": "snapshots-tool-aurora-eu-central-1"
@@ -188,13 +188,13 @@
 		"alarmcwCopyFailedDest": {
 			"Type": "AWS::CloudWatch::Alarm",
 			"Properties": {
-				"AlarmDescription": "DB Copy to destination status",
+				"AlarmDescription": "DB Copy to destination status if failed more than twice in last 1.5 hours, this alert is raised.",
 				"ActionsEnabled": "true",
 				"ComparisonOperator": "GreaterThanOrEqualToThreshold",
-				"EvaluationPeriods": "1",
+				"EvaluationPeriods": "3",
 				"MetricName": "ExecutionsFailed",
 				"Namespace": "AWS/States",
-				"Period": "3600",
+				"Period": "1800",
 				"Statistic": "Sum",
 				"Threshold": "2.0",
 				"TreatMissingData": "ignore",
@@ -231,10 +231,10 @@
 			"Type": "AWS::CloudWatch::Alarm",
 			"Condition": "DeleteOld",
 			"Properties": {
-				"AlarmDescription": "Failed to delete old snapshots from destination",
+				"AlarmDescription": "Failed to delete old snapshots from destination in last 3 hours over twice, then this alert is raised.",
 				"ActionsEnabled": "true",
 				"ComparisonOperator": "GreaterThanOrEqualToThreshold",
-				"EvaluationPeriods": "2",
+				"EvaluationPeriods": "3",
 				"MetricName": "ExecutionsFailed",
 				"Namespace": "AWS/States",
 				"Period": "3600",
